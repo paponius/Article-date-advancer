@@ -21,7 +21,7 @@
 
 
 // ==UserScript==
-// @name           DEBUG - Old page warning and more date details
+// @name           DEBUG - Article date advancer
 // @author         papo
 
 // ###run-at         document-start
@@ -29,7 +29,7 @@
 
 // @noframes
 
-// @require        file://H:\Projects\JS\UserScripts-papo\src\old_page_warning.js
+// @require        file://H:\Projects\JS\Article-date-advancer\src\article-date-advancer.js
 
 
 //// Allowing everything in this debug US:
