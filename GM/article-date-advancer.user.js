@@ -18,7 +18,7 @@
 // v2.1
 
 // ==UserScript==
-// @name           Article date: time zone info, add date of an update, warn on older.
+// @name           Article date advancer: time zone info, add date of an update, warn on older.
 // @namespace      https://github.com/paponius/
 // @description    Remove confusion by always showing local date. Old article warning inspired by The Guardian.
 // @author         papo
@@ -43,7 +43,7 @@
 // @grant          none
 
 //// PROJECT FILES
-// @require        https://github.com/paponius/UserScripts-papo/raw/master/src/old_page_warning.js?v0.9
+// @require        https://github.com/paponius/Article-date-advancer/raw/master/src/article-date-advancer.js?v0.9
 
 // @noframes
 // UserScript will not run in iFrames

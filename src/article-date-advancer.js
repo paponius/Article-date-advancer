@@ -117,6 +117,7 @@ switch (true) {
 		};
 		checkAge(dateEpochPage, hndInject);
 		break;
+
 	case location.hostname.includes('reuters.com'):
 		// 2509 adding `-module` variants. `[class*="info-content__author-date__"], [class*="info-content-module__author-date__"]` were not found now
 		elDate = (document.querySelector(':is([class*="info-content__author-date__"], [class*="info-content-module__author-date__"]) :is([class*="date-line__date___"], [class*="date-line-module__date___"]):not(:last-child)') ||
@@ -128,15 +129,15 @@ switch (true) {
 		datePage = elDate.textContent;
 		// February 23, 2025
 		dateEpochPage = Date.parse(datePage);
-		hndInject = function(el) {
+
+		checkAge(dateEpochPage, elWarn => setTimeout( () => {
 			if (DEBUG) { debugger; }
 			var elRef = document.querySelector(':is([class*="default-article-header__heading__"], [class*="default-article-header-module__heading__"]) h1[data-testid="Heading"]');
 			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
-			elRef.before(el);
-			el.after(document.createElement('div'));
+			elRef.before(elWarn);
+			elWarn.after(document.createElement('div'));
 			//width: max-content;
-		};
-		checkAge(dateEpochPage, hndInject);
+		}, 3000));
 		break;
 
 	// 'bbc.co.uk' and 'bbc.com' share some notes,
