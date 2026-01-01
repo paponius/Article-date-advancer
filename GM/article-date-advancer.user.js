@@ -1,3 +1,7 @@
+// This file was renamed to article-date-enhancer.user.js
+// Don't use this file, it will be deleted.
+//
+//
 // This is a GreaseMonkey User Script file.
 // It contains only the Metadata Block.
 // All JavaScript code is in separate files, to make development more portable and easier.
@@ -25,6 +29,8 @@
 // @version        1.1.6
 // @license        CC BY-NC-SA 4.0
 // @icon           https://archive.org/offshoot_assets/favicon.ico
+// @updateURL    https://github.com/paponius/Article-date-enhancer/raw/master/GM/article-date-enhancer.user.js
+// @downloadURL  https://github.com/paponius/Article-date-enhancer/raw/master/GM/article-date-enhancer.user.js
 
 // v1.0 2025-04-07
 // v1.1 2025-12

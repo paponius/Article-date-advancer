@@ -15,7 +15,7 @@ if (DEBUG == 's') { debugger; } // stop at beginning
 (function() {
 'use strict';
 
-if (LOG) { console.log('[old_page_warning] START'); }
+if (LOG) { console.log('[article date enhancer] START'); }
 var dateNow = new Date();
 var dateEpochNow = Date.parse(dateNow);
 var dateEpochRefOld = dateNow.setMonth(dateNow.getMonth()-1);
@@ -36,16 +36,16 @@ Common variables inside the switch block:
 Template:
 	case location.hostname.includes('XXX.com'):
 		elDate = document.querySelector('');
-		if (!elDate) { console.error("[old_page_warning] Can't find the time element. Selectors failed."); }
+		if (!elDate) { console.error("[article date enhancer] Can't find the time element. Selectors failed."); }
 		datePage = elDate.getAttribute('datetime');
-		--- OR ---
+		// --- OR ---
 		datePage = elDate.textContent;
 		dateEpochPage = Date.parse(datePage);
 		checkAge(dateEpochPage, elWarn => {
-		--- OR ---
-		checkAge(dateEpochPage, elWarn => setTimeout( () => {
+		// --- OR ---
+		// checkAge(dateEpochPage, elWarn => setTimeout( () => {
 			var elRef = document.querySelector('SELECTOR');
-			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
 			elRef.before(elWarn);
 			--- OR ---
 			elRef.prepend(elWarn);
@@ -53,8 +53,8 @@ Template:
 			elRef.after(elWarn);
 			elWarn.after(document.createElement('div'));
 		});
-		--- OR ---
-		}, 3200));
+		// --- OR ---
+		// }, 3200));
 		break;
  */
 switch (true) {
@@ -64,12 +64,12 @@ switch (true) {
 	   // time datetime="2022-06-13T13:00:07-04:00" class="css-1gu861y e16638kd2"
 		datePage = document.querySelector('time[datetime]').getAttribute('datetime');
 		// todo: split it to two lines: elDate = 
-		// if (!elDate) { console.error("[old_page_warning] Can't find the time element. Selectors failed."); }
+		// if (!elDate) { console.error("[article date enhancer] Can't find the time element. Selectors failed."); }
 
 		dateEpochPage = Date.parse(datePage);
-		hndInject = el => { if (LOG) { console.log('[old_page_warning]', el); } setTimeout(() => {
+		hndInject = el => { if (LOG) { console.log('[article date enhancer]', el); } setTimeout(() => {
 			var elRef = document.querySelector('article#story h1[data-testid="headline"]');
-			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
 			elRef.prepend(el);
 			el.after(document.createElement('div'));
 		}, 3000);};
@@ -78,14 +78,14 @@ switch (true) {
 	case location.hostname.includes('cnn.com'):
 		datePage = document.querySelector('.timestamp.vossi-timestamp').textContent;
 		// todo: split it to two lines: elDate = 
-		// if (!elDate) { console.error("[old_page_warning] Can't find the time element. Selectors failed."); }
+		// if (!elDate) { console.error("[article date enhancer] Can't find the time element. Selectors failed."); }
 
 		// "    Updated          10:55 PM EDT, Tue March 19, 2024      "
 		dateStr = datePage.match(/\s([A-z]+\s[A-z]+\s\d+,\s\d+)/)[1];
 		dateEpochPage = Date.parse(dateStr);
 		hndInject = function(el) {
 			var elRef = document.querySelector('.vossi-headline-text');
-			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
 			elRef.before(el);
 		};
 		checkAge(dateEpochPage, hndInject);
@@ -93,26 +93,26 @@ switch (true) {
 	case location.hostname.includes('politico.eu'):
 		datePage = document.querySelector('.article-meta__date-time > .date-time__date').textContent;
 		// todo: split it to two lines: elDate = 
-		// if (!elDate) { console.error("[old_page_warning] Can't find the time element. Selectors failed."); }
+		// if (!elDate) { console.error("[article date enhancer] Can't find the time element. Selectors failed."); }
 
 		// February 23, 2025
 		dateEpochPage = Date.parse(datePage);
 		hndInject = function(el) {
 			var elRef = document.querySelector('h1.hero__title');
-			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
 			elRef.before(el);
 		};
 		checkAge(dateEpochPage, hndInject);
 		break;
 	case location.hostname.includes('politico.com'):
 		elDate = document.querySelector('.story-meta__updated > time[datetime], .story-meta__timestamp > time[datetime], .article-lead time[datetime]');
-		if (!elDate) { console.error("[old_page_warning] Can't find the time element. Selectors failed."); }
+		if (!elDate) { console.error("[article date enhancer] Can't find the time element. Selectors failed."); }
 
 		datePage = elDate.getAttribute('datetime');
 		dateEpochPage = Date.parse(datePage);
 		hndInject = function(el) {
 			var elRef = document.querySelector('.media-item--story .headline, .article-lead h1');
-			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
 			elRef.before(el);
 		};
 		checkAge(dateEpochPage, hndInject);
@@ -123,7 +123,7 @@ switch (true) {
 		elDate = (document.querySelector(':is([class*="info-content__author-date__"], [class*="info-content-module__author-date__"]) :is([class*="date-line__date___"], [class*="date-line-module__date___"]):not(:last-child)') ||
 						  document.querySelector(':is([class*="default-article-header__info-content__"], [class*="default-article-header-module__info-content__"]) :is([class*="date-line__date__"], [class*="date-line-module__date__"]):not(:last-child)')
 						 );
-		if (!elDate) { console.error("[old_page_warning] Can't find the time element. Selectors failed."); }
+		if (!elDate) { console.error("[article date enhancer] Can't find the time element. Selectors failed."); }
 
 		// datePage = document.querySelector('[class*="info-content__author-date__"] [class*="date-line__date___"]:not(:last-child)').textContent;
 		datePage = elDate.textContent;
@@ -133,7 +133,7 @@ switch (true) {
 		checkAge(dateEpochPage, elWarn => setTimeout( () => {
 			if (DEBUG) { debugger; }
 			var elRef = document.querySelector(':is([class*="default-article-header__heading__"], [class*="default-article-header-module__heading__"]) h1[data-testid="Heading"]');
-			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
 			elRef.before(elWarn);
 			elWarn.after(document.createElement('div'));
 			//width: max-content;
@@ -164,7 +164,7 @@ switch (true) {
 		try {
 			objJSON = JSON.parse(strJSON);
 		} catch (error) {
-			console.error('[old_page_warning] <script> element contains broken JSON. Element content:', elScript, strJSON);
+			console.error('[article date enhancer] <script> element contains broken JSON. Element content:', elScript, strJSON);
 			if (DEBUG) { debugger; }
 			// continue;
 		}
@@ -205,7 +205,7 @@ switch (true) {
 		checkAge(firstPublished, elWarn => setTimeout( () => {
 			// I took this from my Dark UC.
 			var elRef = document.querySelector('main#main-content ul[class*="-MetadataStripContainer"] li:last-child');
-			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
 			elRef.after(elWarn);
 			// elWarn.after(document.createElement('div'));
 		}, 3000));
@@ -223,7 +223,7 @@ switch (true) {
 		try {
 			objJSON = JSON.parse(strJSON);
 		} catch (error) {
-			console.error('[old_page_warning] <script> element contains broken JSON. Element content:', elScript, strJSON);
+			console.error('[article date enhancer] <script> element contains broken JSON. Element content:', elScript, strJSON);
 			if (DEBUG) { debugger; }
 			// continue;
 		}
@@ -265,28 +265,89 @@ switch (true) {
 		checkAge(firstPublished, elWarn => setTimeout( () => {
 			// I took this from my Dark UC.
 			var elRef = document.querySelector(':where(body > #__next main#main-content > article) :is([data-testid="byline"], [data-testid="byline-new"]) time:last-of-type');
-			if (!elRef) { console.error("[old_page_warning] Can't find the reference element for injection."); }
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
 			elRef.after(elWarn);
 			// elWarn.after(document.createElement('div'));
 		}, 3200));
 		break; }
-}
+
+	case location.hostname.includes('forum24.cz'): {
+		// if (DEBUG) { debugger; }
+		// partially copied from my show_video_date.js
+		// let elScript, strJSON; // declared before `for`, so it can be used in `console.error`
+
+		// there is only one JSON object and only one [type="application/ld+json"], will not iterate all <script>
+		const strJSON = document.querySelector('script[type="application/ld+json"]').textContent;
+
+		let objJSON;
+		try {
+			objJSON = JSON.parse(strJSON);
+		} catch (error) {
+			console.error('[article date enhancer] <script> element contains broken JSON. Element content:', strJSON);
+			if (DEBUG) { debugger; }
+		}
+
+		let datePublished;
+		let dateModified;
+		objJSON?.['@graph']?.forEach(itm => {
+			if (itm.datePublished) datePublished = itm.datePublished;
+			if (itm.dateModified) dateModified = itm.dateModified;
+			// might be interesting, it'll probably hold original headline in case it was changed
+			// itm.headline
+			// itm.articleBody
+		});
+		// todo not checked what is an error date here
+		if (!datePublished) { console.error("[article date enhancer] Can't find the time element. Selectors failed."); }
+		const strDatePublished = timeToLocale(datePublished, 'cs');
+		var elDate1 = document.querySelector('article[id] > div:first-of-type a + div + span');
+		elDate1.textContent = strDatePublished;
+		if (LOG) { console.log(`[article date enhancer] datePublished: ${datePublished} | strDatePublished: ${strDatePublished}`); }
+
+		if (dateModified && dateModified !== datePublished) { // dateModified could be undefined, but they most likely can't be different
+			const strDateModified = timeToLocale(dateModified, 'cs');
+			const elDividerClone = document.querySelector('article[id] > div:first-of-type a + div:has(+ span)').cloneNode();
+			const elTimeUpdated = document.createElement('SPAN');
+			elTimeUpdated.textContent = 'upraveno: ' + strDateModified;
+			elDate1.after(elDividerClone);
+			elDividerClone.after(elTimeUpdated);
+			if (LOG) { console.log(`[article date enhancer] dateModified: ${dateModified} | strDateModified: ${strDateModified}`); }
+		}
+
+		const dateEpochPage = Date.parse(new Date(datePublished));
+		checkAge(dateEpochPage, elWarn => {
+		// --- OR ---
+		// checkAge(dateEpochPage, elWarn => setTimeout( () => {
+			var elRef = document.querySelector('header ~ section:first-of-type:has(> h1');
+			if (!elRef) { console.error("[article date enhancer] Can't find the reference element for injection."); }
+			elRef.before(elWarn);
+			// --- OR ---
+			// elRef.prepend(elWarn);
+			// --- OR ---
+			// elRef.after(elWarn);
+			// elWarn.after(document.createElement('div'));
+		}, 'cz');
+		// --- OR ---
+		// }, 3200));
+		break; }
+	}
 
 // function addTimeBlock(date, elToClone, selText, text, hndInject) {}
 
-function timeToLocale(timestamp) {
+function timeToLocale(timestamp, lang = 'en-GB') {
+	if  (!timestamp) { console.error('[article date enhancer] timeToLocale() parameter is undefined.'); }
 	var date = new Date(timestamp);
 	var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'
 		// , second: 'numeric', fractionalSecondDigits: 3
 	};
-	var fmt = new Intl.DateTimeFormat('en-GB', options);
+	if (lang === 'cs') { options.month = 'numeric'; } // or '2-digit'
+	var fmt = new Intl.DateTimeFormat(lang, options);
 	return fmt.format(date);
 }
 
-function checkAge(dateEpochPage, hndInject) {
+function checkAge(dateEpochPage, hndInject, lang = 'en') {
 	// 86400 day, *30 = 2592000
 	var ageMonths = Math.round((((dateEpochNow - dateEpochPage) / 1000) / 2592000) * 10) / 10;
-	//if (LOG) { console.log('[old_page_warning] oldarticle:',ageMonths,' months',dateEpochPage,dateEpochRefOld); }
+	//if (LOG) { console.log('[article date enhancer] oldarticle:',ageMonths,' months',dateEpochPage,dateEpochRefOld); }
 	if (dateEpochPage < dateEpochRefOld) {
 		//alert('old');
 	}
@@ -323,7 +384,9 @@ function checkAge(dateEpochPage, hndInject) {
 
 	var elWarn = document.createElement('div');
 	elWarn.classList.add('old-article');
-	elWarn.innerHTML = `This article is more than <strong>${ageMonths} months old</strong>`;
+	if (lang === 'cz') { elWarn.innerHTML = `Tenhle článek je více než <strong>${ageMonths} měsícú starý</strong>`;
+	} else { elWarn.innerHTML = `This article is more than <strong>${ageMonths} months old</strong>`; }
+
 	/* alt:
 	elWarn.textContent = `This article is more than `;
 
